@@ -1,6 +1,5 @@
 alert(" Welcome to a simplified blackjack where you can't split or bet and there are infinite cards. Enter q or Q to exit");
 var quit = true, game, playerCard, dealerCard , sumPlayer, sumDealer=0, aceValue, aceCheck=false, dealerAceCheck=false;
-
 /* This function  selects a random card from a deck and adds the probability of getting a "face" or J,Q or K */
 function randomCard(min,max,face) {
     var card;
@@ -20,23 +19,28 @@ function ace(value) {
     }
     return value;
 }
+function giveCardCheckAce(){
+    playerCard = randomCard(1,9,3);
+    if (playerCard == 1) {
+    aceValue = parseInt(prompt("Please choose a value for the Ace. Valid values are 1 or 11"));
+    playerCard = ace(aceValue);
+    }
+    return playerCard;
+}
 /* Start of Script*/
 /*First Card*/
-playerCard = randomCard(1,9,3);
-if (playerCard == 1) {
-    aceValue = parseInt(prompt("Please choose a value for the Ace"));
-    playerCard = ace(aceValue);
-}
+playerCard = giveCardCheckAce();
 sumPlayer = playerCard;
 alert("Your first card is " + sumPlayer);
 /*Play until the user quits*/
 while (quit == true) {
-    game = prompt("Please Enter any key to give you a card or 'Hit'. Press s or S to 'stand' and Press q or Q to quit")
-    if (game == "q" || game == "Q"){
+    game = prompt("Please Enter any key to give you a card or 'Hit'. Press s or S to 'stand' and Press q or Q to quit").toLowerCase();
+    switch (game) {
+    case "q":
         quit=false;
-    }
+        break;
     /*When the user "stands"*/
-    else if (game == "s" || game == "S") {
+    case "s":
         alert("You stand. You have " + sumPlayer);
         /*IA where the dealer MUST draw cards until a value of 17 and then stands*/
         while (sumDealer<17 && sumDealer < sumPlayer) {
@@ -55,7 +59,7 @@ while (quit == true) {
                 dealerAceCheck=false;
             }
         }
-        if ((sumDealer > 21 || sumPlayer > sumDealer)) {
+        if (sumDealer > 21 || sumPlayer > sumDealer) {
             alert("CONGRATULATIONS!!!!! YOU WIN!!!!!. You got " + sumPlayer + " and the Dealer got " + sumDealer);
             quit = false;
         } 
@@ -63,13 +67,9 @@ while (quit == true) {
             alert("You got a total of " + sumPlayer + " and the Dealer got " + sumDealer + ". YOU LOSE :(. Thanks for playing. Please press F5 and try again ");
             quit=false;
         }
-    }
-    else{
-        playerCard = randomCard(1,9,3);
-        if (playerCard == 1) {
-            aceValue = parseInt(prompt("Please choose a value for the Ace"));
-            playerCard = ace(aceValue);
-        }
+        break;
+    default:
+        playerCard = giveCardCheckAce();
         sumPlayer = sumPlayer + playerCard;
         alert("Your CARD is " + playerCard + ". You have " + sumPlayer);
         if (sumPlayer>21 && aceCheck == false){
@@ -90,8 +90,7 @@ while (quit == true) {
                 continue
             }
         }
-        
+        break;
     }
 }
-
-
+alert("Thanks for playing :D. Have a nice day");
