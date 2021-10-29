@@ -1,8 +1,7 @@
 alert(" Welcome to a simplified blackjack where you can't split or bet and there are infinite cards. Enter q or Q to exit");
-var quit = true, game, playerCard, dealerCard , sumPlayer, sumDealer=0, aceValue, aceCheck=false, dealerAceCheck=false;
+var quit = true, game, playerCard, dealerCard , sumPlayer, sumDealer=0, aceValue, aceCheck=false, card; dealerAceCheck=false;
 /* This function  selects a random card from a deck and adds the probability of getting a "face" or J,Q or K */
 function randomCard(min,max,face) {
-    var card;
     card = Math.floor(Math.random() * (max + face - min + 1) + min);
     if (card>=10) {
         card=10;
@@ -12,24 +11,31 @@ function randomCard(min,max,face) {
 /* This function checks if the user entered a valid number for the Ace and checks until a valid number is written */
 function ace(value) {
     while (!(value==1 || value==11)) {
-        value=parseInt(prompt("Please choose a valid value for the Ace. Valid Values are 1 or 11"));
+        value=parseInt(prompt("Please choose a valid value for the Ace. Valid values are 1 or 11"));
     }
     if (value==11) {
         aceCheck=true;
     }
     return value;
 }
-function giveCardCheckAce(){
-    playerCard = randomCard(1,9,3);
-    if (playerCard == 1) {
-    aceValue = parseInt(prompt("Please choose a value for the Ace. Valid values are 1 or 11"));
-    playerCard = ace(aceValue);
+class decks {
+    constructor(cards){
+        this.cards=cards;
     }
-    return playerCard;
+    /*This method selects a random card from the deck and checks if it's and Ace. If true, then asks the player for the value*/
+    giveCardCheckAce(){
+        playerCard = randomCard(1,9,3);
+        if (playerCard == 1) {
+        aceValue = parseInt(prompt("Please choose a value for the Ace. Valid values are 1 or 11"));
+        playerCard = ace(aceValue);
+        }
+        return playerCard;
+    }
 }
+const deck1 = new decks();
 /* Start of Script*/
 /*First Card*/
-playerCard = giveCardCheckAce();
+playerCard = deck1.giveCardCheckAce();
 sumPlayer = playerCard;
 alert("Your first card is " + sumPlayer);
 /*Play until the user quits*/
@@ -69,7 +75,7 @@ while (quit == true) {
         }
         break;
     default:
-        playerCard = giveCardCheckAce();
+        playerCard = deck1.giveCardCheckAce();
         sumPlayer = sumPlayer + playerCard;
         alert("Your CARD is " + playerCard + ". You have " + sumPlayer);
         if (sumPlayer>21 && aceCheck == false){
