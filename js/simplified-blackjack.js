@@ -1,7 +1,7 @@
 alert(" Welcome to a simplified blackjack where you can't split or bet. You play with 8 decks. Enter q or Q to exit");
 var quit = true, game, playerCard, dealerCard , sumPlayer, sumDealer=0, aceValue, aceCheck=false, card; dealerAceCheck=false;
 var cardsDecks=[1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10,1,2,3,4,5,6,7,8,9,10,10,10];
-/* This function  selects a random card from the decks in the array cardsDecks*/
+/* This function  selects a random card from the 8 decks in the array cardsDecks*/
 function randomCard() {
     let i = Math.floor(Math.random() * cardsDecks.length);
     card=cardsDecks[i];
@@ -47,6 +47,7 @@ alert("Your first card is " + sumPlayer);
 /*Play until the user quits*/
 while (quit == true) {
     game = prompt("Please Enter any key to give you a card or 'Hit'. Press s or S to 'stand' and Press q or Q to quit").toLowerCase();
+    //This switch cheks if the player quits, stands or asks for a card
     switch (game) {
     case "q":
         quit=false;
@@ -71,29 +72,36 @@ while (quit == true) {
                 dealerAceCheck=false;
             }
         }
+        // If the dealer busts (gets more than 21) or the player sum of the cards is lower than 21 but it's higher than the Dealer's, then the player wins
         if (sumDealer > 21 || sumPlayer > sumDealer) {
             alert("CONGRATULATIONS!!!!! YOU WIN!!!!!. You got " + sumPlayer + " and the Dealer got " + sumDealer);
             quit = false;
         } 
+        // else, the player looses
         else {
             alert("You got a total of " + sumPlayer + " and the Dealer got " + sumDealer + ". YOU LOSE :(. Thanks for playing. Please press F5 and try again ");
             quit=false;
         }
         break;
+    //When the player asks for a card
     default:
+        //The program asks for a card and then checks if the player has an Ace, and asks for a valid value of 1 or 11
         playerCard = deck1.giveCardCheckAce();
         sumPlayer = sumPlayer + playerCard;
         alert("Your CARD is " + playerCard + ". You have " + sumPlayer);
+        // If the player's sum of cards is higher than 21 and he/she doesn't have an Ace value of 11, then he/she looses
         if (sumPlayer>21 && aceCheck == false){
             alert( "You Got a Total of " + sumPlayer + ". YOU LOSE :(. Thanks for playing. Please press F5 and try again");
             quit = false;
         }
+        //If the player's sum of cards is higher than 21 and he/she has an Ace with a value of 11, the program changes the Ace for a 1 by substracting 10 to the player's sum of cards
         else if(sumPlayer>21 && aceCheck == true){
             let prevSum;
             prevSum=sumPlayer;
             sumPlayer = sumPlayer - 10;
             alert("You 'Bust' with " +  prevSum + " so you change your Ace from an 11 to a 1. Your new number is " + sumPlayer);
             aceCheck=false;
+            //If the player's sum of cards is higher than 21, the he/she looses
             if (sumPlayer>21) {
                 alert( "You Got a Total of " + sumPlayer + ". YOU LOSE :(. Thanks for playing. Please press F5 and try again");
                 quit=false;
