@@ -74,28 +74,20 @@ function ace(value) {
 }
 function bet() {
 	let exit1 = true;
-	if (money == 0) {
-		alert(
-			`You Lose. You don't have any money left to bet. Good luck next time :)`
+	while (exit1 == true) {
+		betAmount = parseFloat(
+			prompt(`Please place a bet. You have $${money} to spend`)
 		);
-		exit1 = false;
-		return money;
-	} else {
-		while (exit1 == true) {
-			betAmount = parseFloat(
-				prompt(`Please place a bet. You have $${money} to spend`)
+		if (betAmount <= money) {
+			alert(`You bet $${betAmount}`);
+			exit1 = false;
+			return betAmount;
+		} else if (isNaN(betAmount)) {
+			alert(`Please select a valid number for a bet`);
+		} else {
+			alert(
+				`Your bet of $${betAmount} is higher than your total amount of money $${money}. Please make another bet.`
 			);
-			if (betAmount <= money) {
-				alert(`You bet $${betAmount}`);
-				exit1 = false;
-				return betAmount;
-			} else if (isNaN(betAmount)) {
-				alert(`Please select a valid number for a bet`);
-			} else {
-				alert(
-					`Your bet of $${betAmount} is higher than your total amount of money $${money}. Please make another bet.`
-				);
-			}
 		}
 	}
 }
