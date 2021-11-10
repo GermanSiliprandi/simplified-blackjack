@@ -97,7 +97,6 @@ function trueExit() {
 		`Press q to Quit or another key to continue playing`
 	).toLowerCase();
 	if (finalExit == `q`) {
-		money -= betAmount;
 		return (parentExit = false);
 	}
 }
