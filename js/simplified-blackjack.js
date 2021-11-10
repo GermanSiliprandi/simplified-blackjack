@@ -196,7 +196,7 @@ while (money > 0 && parentExit == true) {
 					// If the dealer busts (gets more than 21) or the player sum of the cards is lower than 21 but it's higher than the Dealer's, then the player wins
 					//PREGUNTA Es neesario colocar tantos you win, you lose? Existe alguna forma mas elegante o correcta de hacerlo?
 					if (sumDealer > 21 || sumPlayer > sumDealer) {
-						money += betAmount * 2;
+						money += betAmount;
 						alert(
 							`CONGRATULATIONS!!!!! YOU WIN!!!!!. You got ${sumPlayer} and the Dealer got ${sumDealer}. You WIN $${betAmount}. Now your total amount of money is $${money}`
 						);
