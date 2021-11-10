@@ -52,7 +52,7 @@ function randomCard() {
 	return card;
 }
 function firstDealerCard() {
-	dealerCard = randomCard();
+	dealerCard = 1;
 	if (dealerCard == 1) {
 		alert(`The dealer's first card is an Ace`);
 	}
@@ -142,9 +142,9 @@ while (money > 0 && parentExit == true) {
 	playerCard = deck1.giveCardCheckAce();
 	sumPlayer = playerCard;
 	dealerCard = firstDealerCard();
-	sumDealer = dealerCard;
+	sumDealer = 0;
 	alert(
-		`Your firt card is ${sumPlayer}. Dealer's First card is ${sumDealer}. Your bet is $${betAmount}`
+		`Your firt card is ${sumPlayer}. Dealer's First card is ${dealerCard}. Your bet is $${betAmount}`
 	);
 	/*Play until the user quits*/
 	while (quit == true) {
@@ -152,7 +152,7 @@ while (money > 0 && parentExit == true) {
 			quit = false;
 		} else {
 			game = prompt(
-				`Your Card is ${playerCard}. You Have ${sumPlayer}. Dealer's First Card is ${sumDealer}. Your bet is $${betAmount}. Please enter any key to give you a card or 'Hit'. Press s or S to 'stand'. Press q or Q to quit`
+				`Your Card is ${playerCard}. You Have ${sumPlayer}. Dealer's First Card is ${dealerCard}. Your bet is $${betAmount}. Please enter any key to give you a card or 'Hit'. Press s or S to 'stand'. Press q or Q to quit`
 			).toLowerCase();
 			//This switch cheks if the player quits, stands or asks for a card
 			switch (game) {
@@ -229,7 +229,7 @@ while (money > 0 && parentExit == true) {
 					playerCard = deck1.giveCardCheckAce();
 					sumPlayer = sumPlayer + playerCard;
 					alert(
-						`Your Card is ${playerCard}. You Have ${sumPlayer}. Dealer's First Card is ${sumDealer}`
+						`Your Card is ${playerCard}. You Have ${sumPlayer}. Dealer's First Card is ${dealerCard}`
 					);
 					// If the player's sum of cards is higher than 21 and he/she doesn't have an Ace value of 11, then he/she looses
 					if (sumPlayer > 21 && aceCheck == false) {
