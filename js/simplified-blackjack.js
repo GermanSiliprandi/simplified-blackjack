@@ -124,6 +124,8 @@ if (localStorage.getItem(`playBefore`) == `true`) {
 	alert;
 }
 /*First Card*/
+//PREGUNTA Es necesario un Doble While???
+//PREGUNTA La forma de tratar los break y las condicionesde salida de los while (booleanos) es correcta o muy rebuscada?
 while (money > 0 && parentExit == true) {
 	cardsDecks = newDecks;
 	quit = true;
@@ -192,6 +194,7 @@ while (money > 0 && parentExit == true) {
 						dealerCard = randomCard();
 					}
 					// If the dealer busts (gets more than 21) or the player sum of the cards is lower than 21 but it's higher than the Dealer's, then the player wins
+					//PREGUNTA Es neesario colocar tantos you win, you lose? Existe alguna forma mas elegante o correcta de hacerlo?
 					if (sumDealer > 21 || sumPlayer > sumDealer) {
 						money += betAmount * 2;
 						alert(
@@ -240,7 +243,7 @@ while (money > 0 && parentExit == true) {
 								sumPlayer
 						);
 						aceCheck = false;
-						//If the player's sum of cards is higher than 21, the he/she looses
+						//If the player's sum of cards is higher than 21, then he/she looses
 						if (sumPlayer > 21) {
 							money -= betAmount;
 							alert(
