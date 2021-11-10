@@ -51,6 +51,13 @@ function randomCard() {
 	}
 	return card;
 }
+function firstDealerCard() {
+	dealerCard = 1;
+	if (dealerCard == 1) {
+		alert(`The dealer's first card is an Ace`);
+	}
+	return dealerCard;
+}
 /* This function checks if the user entered a valid number for the Ace and checks until a valid number is written */
 function ace(value) {
 	while (!(value == 1 || value == 11)) {
@@ -134,7 +141,7 @@ while (money > 0 && parentExit == true) {
 	bet();
 	playerCard = deck1.giveCardCheckAce();
 	sumPlayer = playerCard;
-	dealerCard = randomCard();
+	dealerCard = firstDealerCard();
 	sumDealer = dealerCard;
 	alert(
 		`Your firt card is ${sumPlayer}. Dealer's First card is ${sumDealer}. Your bet is $${betAmount}`
@@ -196,7 +203,7 @@ while (money > 0 && parentExit == true) {
 						dealerCard = randomCard();
 					}
 					// If the dealer busts (gets more than 21) or the player sum of the cards is lower than 21 but it's higher than the Dealer's, then the player wins
-					//PREGUNTA Es neesario colocar tantos you win, you lose? Existe alguna forma mas elegante o correcta de hacerlo?
+					//PREGUNTA Es necesario colocar tantos you win, you lose? Existe alguna forma mas elegante o correcta de hacerlo?
 					if (sumDealer > 21 || sumPlayer > sumDealer) {
 						money += betAmount;
 						alert(
