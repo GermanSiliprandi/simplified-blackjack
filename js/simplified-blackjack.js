@@ -97,6 +97,7 @@ function trueExit() {
 		`Press q to Quit or another key to continue playing`
 	).toLowerCase();
 	if (finalExit == `q`) {
+		money -= betAmount;
 		return (parentExit = false);
 	}
 }
@@ -148,6 +149,7 @@ while (money > 0 && parentExit == true) {
 				case "q":
 					quit = false;
 					parentExit = false;
+					money -= betAmount;
 					break;
 				/*When the user "stands"*/
 				case "s":
@@ -259,7 +261,10 @@ while (money > 0 && parentExit == true) {
 alert(
 	`Your final money is $${money}. You started with $${initialMoney}. Thanks for playing :D. Have a nice day`
 );
-if (localStorage.getItem(`score`) < money) {
+if (isNaN(parseFloat(localStorage.getItem(`score`))) === true) {
+	localStorage.setItem(`score`, money);
+	alert(`You have a new Highscore of $${money}`);
+} else if (parseFloat(localStorage.getItem(`score`)) < money) {
 	localStorage.setItem(`score`, money);
 	alert(`You have a new Highscore of $${money}`);
 }
