@@ -52,7 +52,7 @@ function randomCard() {
 	return card;
 }
 function firstDealerCard() {
-	dealerCard = 1;
+	dealerCard = randomCard();
 	if (dealerCard == 1) {
 		alert(`The dealer's first card is an Ace`);
 	}
