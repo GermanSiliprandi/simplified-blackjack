@@ -127,6 +127,8 @@ if (localStorage.getItem(`playBefore`) == `true`) {
 //PREGUNTA Es necesario un Doble While???
 //PREGUNTA La forma de tratar los break y las condicionesde salida de los while (booleanos) es correcta o muy rebuscada?
 while (money > 0 && parentExit == true) {
+	dealerAceCheck = false;
+	aceCheck = false;
 	cardsDecks = newDecks;
 	quit = true;
 	bet();
