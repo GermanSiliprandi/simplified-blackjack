@@ -12,9 +12,9 @@ let quit,
 	aceCheck = false,
 	card,
 	betAmount = 0,
-	initialMoney = 10000;
-money = initialMoney;
-dealerAceCheck = false;
+	initialMoney = 10000,
+	money = initialMoney,
+	dealerAceCheck = false;
 let cardsDecks = [
 		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
 		10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8,
@@ -90,6 +90,14 @@ function bet() {
 				);
 			}
 		}
+	}
+}
+function trueExit() {
+	let finalExit = prompt(
+		`Press q to Quit or another key to continue playing`
+	).toLowerCase();
+	if (finalExit == `q`) {
+		return (parentExit = false);
 	}
 }
 class decks {
@@ -189,6 +197,7 @@ while (money > 0 && parentExit == true) {
 							`CONGRATULATIONS!!!!! YOU WIN!!!!!. You got ${sumPlayer} and the Dealer got ${sumDealer}. You WIN $${betAmount}. Now your total amount of money is $${money}`
 						);
 						quit = false;
+						trueExit();
 						break;
 					}
 					// else, the player looses
@@ -198,6 +207,7 @@ while (money > 0 && parentExit == true) {
 							`YOU LOSE THIS TIME :(. You got ${sumPlayer} and the Dealer got ${sumDealer}. You LOSE $${betAmount}. Now your total amount of money is $${money}`
 						);
 						quit = false;
+						trueExit();
 					}
 					break;
 				//When the player asks for a card
@@ -215,6 +225,7 @@ while (money > 0 && parentExit == true) {
 							`YOU LOSE THIS TIME :(. You got ${sumPlayer} and the Dealer got ${sumDealer}. You LOSE $${betAmount}. Now your total amount of money is $${money}`
 						);
 						quit = false;
+						trueExit();
 					}
 					//If the player's sum of cards is higher than 21 and he/she has an Ace with a value of 11, the program changes the Ace for a 1 by substracting 10 to the player's sum of cards
 					else if (sumPlayer > 21 && aceCheck == true) {
@@ -235,6 +246,7 @@ while (money > 0 && parentExit == true) {
 								`YOU LOSE THIS TIME :(. You got ${sumPlayer} and the Dealer got ${sumDealer}. You LOSE $${betAmount}. Now your total amount of money is $${money}`
 							);
 							quit = false;
+							trueExit();
 						} else {
 							continue;
 						}
@@ -249,5 +261,5 @@ alert(
 );
 if (localStorage.getItem(`score`) < money) {
 	localStorage.setItem(`score`, money);
-	alert(`You have a new Highscore of ${money}`);
+	alert(`You have a new Highscore of $${money}`);
 }
