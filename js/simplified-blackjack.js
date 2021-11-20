@@ -1,46 +1,6 @@
 function blackjack() {
 	//alert(" Welcome to a simplified blackjack where you can't split or double down. You play with 8 decks.");
-	const initialMoney = 10000;
-	let dealerAces = [],
-		quit,
-		dealerCards = [],
-		playerCards = [],
-		game,
-		playerCard,
-		sumPlayer = 0,
-		aceValue,
-		aceCheck = false,
-		card,
-		betAmount = 0,
-		money = initialMoney,
-		sumDealerCards;
-	const newDecks = [
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-		10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6,
-		7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1,
-		2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-		10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7,
-		8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2,
-		3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10,
-		10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8,
-		9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3,
-		4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10,
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-		10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4,
-		5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 1,
-		2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-		10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6,
-		7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 1, 2, 3,
-		4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10,
-		10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8,
-		9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 1, 2, 3, 4, 5,
-		6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-		10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 1, 2, 3, 4, 5, 6,
-		7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1,
-		2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-	];
-	let cardsDecks = newDecks;
+
 	/* This function  selects a random card from the 8 decks in the array cardsDecks and deletes the one selected*/
 	function randomCard() {
 		let i = Math.floor(Math.random() * cardsDecks.length);
@@ -139,7 +99,7 @@ function blackjack() {
 		}
 	}
 	function init() {
-		if (money > 0) {
+		if (money > 0 && hitcheck == false) {
 			totalMoney.innerHTML = `<p>Your Total Money is: $${money}</p>`;
 			dealerAces = [];
 			dealerCards = [];
@@ -149,21 +109,26 @@ function blackjack() {
 			quit = true;
 			betAmount = parseFloat(betText.value);
 			if (betAmount <= money && betAmount > 0) {
+				hitcheck = true;
 				playerCard = deck1.giveCardCheckAce();
 				dealerCards.push(randomCard());
 				checkDealerFirstAce();
 				dealerCards.push(randomCard());
 				sumPlayer = playerCard;
+				sumDealerCards = sumDealer();
 				gameSpace.innerHTML = `Your first card is ${sumPlayer}. Dealer's First card is ${dealerCards[0]}. Your bet is $${betAmount}. Press the HIT ME button to get another card or press the STAND button to stand.`;
 			} else {
 				gameSpace.innerHTML = `<p>Your Bet isn't correct. Please choose a number between 0 and ${money} </p>`;
 			}
-		} else {
+		} else if (money == 0) {
 			gameSpace.innerHTML = `<p>Your Total Money is: $${money}. YOU LOSE. PLEASE PRESS RESET TO TRY AGAIN.</p>`;
+		} else if (hitcheck == true) {
+			gameSpace.innerHTML = `<p>You have already made your bet. Please press the HIT ME button or the STAND Button. Press RESET to start again or QUIT to exit.</p> <p>Your Card is ${playerCard}. You Have ${sumPlayer}. Dealer's First Card is ${dealerCards[0]}. Your bet is $${betAmount}.</p> `;
 		}
 	}
 	function hitMe() {
 		//The program asks for a card and then checks if the player has an Ace, and asks for a valid value of 1 or 11
+		hitcheck = true;
 		playerCard = deck1.giveCardCheckAce();
 		sumPlayer = sumPlayer + playerCard;
 		console.log(cardsDecks);
@@ -176,7 +141,7 @@ function blackjack() {
 				`YOU LOSE THIS TIME :(. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. You LOSE $${betAmount}. Now your total amount of money is $${money}`
 			);
 			totalMoney.innerHTML = `Your Total Money is: $${money}`;
-			quit = false;
+			hitcheck = false;
 		}
 		//If the player's sum of cards is higher than 21 and he/she has an Ace with a value of 11, the program changes the Ace for a 1 by substracting 10 to the player's sum of cards
 		else if (sumPlayer > 21 && aceCheck == true) {
@@ -197,7 +162,7 @@ function blackjack() {
 					`YOU LOSE THIS TIME :(. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. You LOSE $${betAmount}. Now your total amount of money is $${money}`
 				);
 				totalMoney.innerHTML = `Your Total Money is: $${money}`;
-				quit = false;
+				hitcheck = false;
 			} else {
 			}
 		}
@@ -205,6 +170,7 @@ function blackjack() {
 
 	/*When the user "stands"*/
 	function stand() {
+		hitcheck = false;
 		if (dealerCards[1] == 1 && dealerAces.length < 1) {
 			alert(`Dealer got an Ace. It's new value is an 11`);
 			dealerCards[1] = 11;
@@ -261,10 +227,12 @@ function blackjack() {
 		} else {
 			totalMoney.innerHTML = `<p> Your final money is $${money}. You started with $${initialMoney}. Thanks for playing :D. Have a nice day </p>`;
 		}
+		money = 10000;
+		gameSpace.innerHTML = `<p> You Start Again with $${money} to spend </p>`;
 	}
 	function rules() {
 		if (rulesText.innerHTML == ``) {
-			rulesText.innerHTML = `<p> Welcome to a game of simplified blackjack, where you can't split or double down. You play with 8 decks. </p> <p> The objective of the game is to get closer to 21 than the dealer. To do so, first place a bet in the Bet field and press the BET button. Afterwards, press the HIT ME button until you are close enough to 21, and the press the STAND button so the Dealer starts playing. Press the RESET button to start again and press the QUIT button to save your highscore.</p>  `;
+			rulesText.innerHTML = `<p> Welcome to a game of simplified blackjack, where you can't split or double down. You play with 8 decks. </p> <p> The objective of the game is to get closer to 21 than the dealer. To do so, first place a bet in the Bet field and press the BET button. Afterwards, press the HIT ME button until you are close enough to 21, and then press the STAND button so the Dealer starts playing. Press the RESET button to start again and press the QUIT button to save your highscore and start again.</p>`;
 		} else {
 			rulesText.innerHTML = ``;
 		}
@@ -284,8 +252,49 @@ function blackjack() {
 		rulesText = document.getElementById("rulesText"),
 		hitmeButton = document.getElementById("hitmeButton"),
 		standButton = document.getElementById("standButton"),
-		gameSpace = document.getElementById("gameSpace");
-
+		gameSpace = document.getElementById("gameSpace"),
+		initialMoney = 10000,
+		newDecks = [
+			1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8,
+			9, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3,
+			4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10,
+			10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6,
+			7, 8, 9, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1,
+			2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+			10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3,
+			4, 5, 6, 7, 8, 9, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10,
+			10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7,
+			8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1,
+			2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+			10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4,
+			5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10,
+			10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7,
+			8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1,
+			2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+			10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 1, 2, 3, 4,
+			5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10,
+			10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6,
+			7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 1,
+			2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+			10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3,
+			4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10,
+			10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7,
+			8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+		];
+	let hitcheck = false,
+		dealerAces = [],
+		quit,
+		dealerCards = [],
+		playerCards = [],
+		playerCard,
+		sumPlayer = 0,
+		aceValue,
+		aceCheck = false,
+		card,
+		betAmount = 0,
+		money = initialMoney,
+		sumDealerCards,
+		cardsDecks = newDecks;
 	betButton.addEventListener("click", init);
 	quitButton.addEventListener("click", quitFinal);
 	resetButton.addEventListener("click", reset);
@@ -295,5 +304,6 @@ function blackjack() {
 	betText.value = "";
 	rulesText.innerHTML = ``;
 	totalMoney.innerHTML = `<p>Your Total Money is: $${money}</p>`;
+	gameSpace.innerHTML = `<p> The objective of the game is to get closer to 21 than the dealer. To do so, first place a bet in the Bet field and press the BET button. Afterwards, press the HIT ME button until you are close enough to 21, and then press the STAND button so the Dealer starts playing. Press the RESET button to start again and press the QUIT button to save your highscore and start again.</p>`;
 }
 blackjack();
