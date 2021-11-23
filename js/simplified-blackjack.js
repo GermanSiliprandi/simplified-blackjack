@@ -116,6 +116,7 @@ function blackjack() {
 			}
 		} else if (money == 0) {
 			gameSpace.innerHTML = `<p>Your Total Money is: $${money}. YOU LOSE. PLEASE PRESS RESET TO TRY AGAIN.</p>`;
+			hitcheck = false;
 			standCheck = true;
 		} else if (hitcheck == true) {
 			gameSpace.innerHTML = `<p>You have already made your bet. Please press the HIT ME button or the STAND Button. Press RESET to start again or QUIT to exit.</p> <p>Your Card is ${playerCard}. You Have ${sumPlayer}. Dealer's First Card is ${dealerCards[0]}. Your bet is $${betAmount}.</p> `;
@@ -138,6 +139,7 @@ function blackjack() {
 				totalMoney.innerHTML = `<p>Your Total Money is: $${money}</p>`;
 				hitcheck = false;
 				standCheck = true;
+				betcheck = false;
 			}
 			//If the player's sum of cards is higher than 21 and he/she has an Ace with a value of 11, the program changes the Ace for a 1 by substracting 10 to the player's sum of cards
 			else if (sumPlayer > 21 && aceCheck == true) {
@@ -156,6 +158,7 @@ function blackjack() {
 					totalMoney.innerHTML = `<p>Your Total Money is: $${money}</p>`;
 					hitcheck = false;
 					standCheck = true;
+					betcheck = false;
 				} else {
 				}
 			}
@@ -192,14 +195,18 @@ function blackjack() {
 				money += betAmount;
 				gameSpace.innerHTML = `<p> CONGRATULATIONS!!!!! YOU WIN!!!!!. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. Dealer's Cards were ${dealerCards}. You WIN $${betAmount}. Now your total amount of money is $${money} </p>`;
 				totalMoney.innerHTML = `Your Total Money is: $${money}`;
+				hitcheck = false;
 				standCheck = true;
+				betcheck = false;
 			}
 			// else, the player looses
 			else {
 				money -= betAmount;
 				gameSpace.innerHTML = `<p>YOU LOSE THIS TIME :(. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. Dealer's Cards were ${dealerCards}. You LOSE $${betAmount}. Now your total amount of money is $${money} </p>`;
 				totalMoney.innerHTML = `Your Total Money is: $${money}`;
+				hitcheck = false;
 				standCheck = true;
+				betcheck = false;
 			}
 		} else {
 			gameSpace.innerHTML = `<p> Please Press the BET button to start again. Press the QUIT button to save your Higscore and reset. Press RESET to reset your money.</p>`;
