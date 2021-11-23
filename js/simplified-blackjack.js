@@ -1,6 +1,4 @@
 function blackjack() {
-	//alert(" Welcome to a simplified blackjack where you can't split or double down. You play with 8 decks.");
-
 	/* This function  selects a random card from the 8 decks in the array cardsDecks and deletes the one selected*/
 	function randomCard() {
 		let i = Math.floor(Math.random() * cardsDecks.length);
@@ -25,10 +23,35 @@ function blackjack() {
 	}
 	function checkDealerFirstAce() {
 		if (dealerCards[0] == 1) {
-			alert(`Dealer got an Ace. It's new value is an 11`);
 			dealerCards[0] = 11;
 			dealerAces.push(0);
 		}
+	}
+	function aceButtonCheck() {
+		aceValue = parseInt(aceText.value);
+
+		while (!(aceValue == 1 || aceValue == 11)) {
+			aceValue = parseInt(aceText.value);
+		}
+		if (aceValue == 11) {
+			aceCheck = true;
+		}
+		return aceValue;
+	}
+	function acePlayerCheck() {
+		aceHTML.innerHTML = `<p class="col-auto"> Please Select a Value for the ACE. Valid Values are 1 or 11</p> 
+
+				<input class="col-auto"
+					type="number"
+					id="aceText"
+					placeholder="Please Enter Ace Value"
+				/>
+				<button class="btn btn-primary col-auto" id="aceButton">
+					ACE VALUE
+				</button> </div> </div>`;
+		aceText = document.getElementById("aceText");
+		aceButton = document.getElementById("aceButton");
+		aceButton.addEventListener("click", aceButtonCheck);
 	}
 	function dealerCard() {
 		dealerCards.push(randomCard());
@@ -43,12 +66,8 @@ function blackjack() {
 			dealerCards[dealerCards.length - 1] = 11;
 			sumDealerCards = sumDealer();
 			dealerAces.push(dealerCards.length - 1);
-			alert(`Dealer got an Ace`);
 		}
-		alert(
-			`Your cards are ${playerCards}. Your total sum is ${sumPlayer}. Dealer's Cards are ${dealerCards}. Dealer's total sum is ${sumDealerCards}`
-		);
-		console.log(dealerAces);
+
 		/* If the Dealer busts but has an Ace as an 11, then it changes it to a 1*/
 		while (
 			sumDealerCards > 17 &&
@@ -58,17 +77,20 @@ function blackjack() {
 			dealerCards[dealerAces[dealerAces.length - 1]] = 1;
 			dealerAces.pop();
 			sumDealerCards = sumDealer();
-			alert(
-				`The dealer changes an Ace from an 11 to a 1. Your cards are ${playerCards}. Your total sum is ${sumPlayer}. Dealer's Cards are ${dealerCards}. Dealer's total sum is ${sumDealerCards}`
-			);
-			console.log(dealerAces);
 		}
 		return dealerCards;
 	}
 
 	/* This function checks if the user entered a valid number for the Ace and checks until a valid number is written */
-	function ace(value) {
+	/*function ace(value) {
 		while (!(value == 1 || value == 11)) {
+			gameInfo.innerHTML = ` <p>Please choose a value for the Ace. Valid values are 1 or 11</p> <input
+			type="text"
+			id="aceText"
+			placeholder="Please Enter Ace Value"
+		/>
+		<button class="btn btn-primary" id="aceButton"></button>`;
+			value = aceText.value;
 			value = parseInt(
 				prompt(
 					"Please choose a valid value for the Ace. Valid values are 1 or 11"
@@ -79,7 +101,7 @@ function blackjack() {
 			aceCheck = true;
 		}
 		return value;
-	}
+	}*/
 	class decks {
 		constructor(cards) {
 			this.cards = cards;
@@ -88,19 +110,22 @@ function blackjack() {
 		giveCardCheckAce() {
 			playerCard = randomCard();
 			if (playerCard == 1) {
-				aceValue = parseInt(
+				playerCard = acePlayerCheck();
+				/*aceValue = parseInt(
 					prompt(
 						"Please choose a value for the Ace. Valid values are 1 or 11"
 					)
 				);
-				playerCard = ace(aceValue);
+				playerCard = ace(aceValue);*/
 			}
 			return playerCard;
 		}
 	}
 	function init() {
+		gameInfo = ``;
 		if (money > 0 && hitcheck == false) {
 			totalMoney.innerHTML = `<p>Your Total Money is: $${money}</p>`;
+
 			dealerAces = [];
 			dealerCards = [];
 			aceCheck = false;
@@ -109,6 +134,8 @@ function blackjack() {
 			quit = true;
 			betAmount = parseFloat(betText.value);
 			if (betAmount <= money && betAmount > 0) {
+				betcheck = true;
+				standCheck = false;
 				hitcheck = true;
 				playerCard = deck1.giveCardCheckAce();
 				dealerCards.push(randomCard());
@@ -128,95 +155,91 @@ function blackjack() {
 	}
 	function hitMe() {
 		//The program asks for a card and then checks if the player has an Ace, and asks for a valid value of 1 or 11
-		hitcheck = true;
-		playerCard = deck1.giveCardCheckAce();
-		sumPlayer = sumPlayer + playerCard;
-		console.log(cardsDecks);
+		gameInfo = ``;
+		if (betcheck == true) {
+			hitcheck = true;
+			playerCard = deck1.giveCardCheckAce();
+			sumPlayer = sumPlayer + playerCard;
+			console.log(cardsDecks);
 
-		gameSpace.innerHTML = `<p>Your Card is ${playerCard}. You Have ${sumPlayer}. Dealer's First Card is ${dealerCards[0]}. Your bet is $${betAmount}. Please press the HIT ME button to give you a card. Press the STAND button to 'stand'. Press the QUIT button to quit.</p>`;
-		// If the player's sum of cards is higher than 21 and he/she doesn't have an Ace value of 11, then he/she looses
-		if (sumPlayer > 21 && aceCheck == false) {
-			money -= betAmount;
-			alert(
-				`YOU LOSE THIS TIME :(. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. You LOSE $${betAmount}. Now your total amount of money is $${money}`
-			);
-			totalMoney.innerHTML = `Your Total Money is: $${money}`;
-			hitcheck = false;
-		}
-		//If the player's sum of cards is higher than 21 and he/she has an Ace with a value of 11, the program changes the Ace for a 1 by substracting 10 to the player's sum of cards
-		else if (sumPlayer > 21 && aceCheck == true) {
-			let prevSum;
-			prevSum = sumPlayer;
-			sumPlayer = sumPlayer - 10;
-			alert(
-				"You 'Bust' with " +
-					prevSum +
-					" so you change your Ace from an 11 to a 1. Your new number is " +
-					sumPlayer
-			);
-			aceCheck = false;
-			//If the player's sum of cards is higher than 21, then he/she looses
-			if (sumPlayer > 21) {
+			gameSpace.innerHTML = `<p>Your Card is ${playerCard}. You Have ${sumPlayer}. Dealer's First Card is ${dealerCards[0]}. Your bet is $${betAmount}. Please press the HIT ME button to give you a card. Press the STAND button to 'stand'. Press the QUIT button to quit.</p>`;
+			// If the player's sum of cards is higher than 21 and he/she doesn't have an Ace value of 11, then he/she looses
+			if (sumPlayer > 21 && aceCheck == false) {
 				money -= betAmount;
-				alert(
-					`YOU LOSE THIS TIME :(. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. You LOSE $${betAmount}. Now your total amount of money is $${money}`
-				);
-				totalMoney.innerHTML = `Your Total Money is: $${money}`;
+				gameSpace.innerHTML = `<p> YOU LOSE THIS TIME :(. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. Dealer's Cards were ${dealerCards}. You LOSE $${betAmount}. Now your total amount of money is $${money}</p>`;
+				totalMoney.innerHTML = `<p>Your Total Money is: $${money}</p>`;
 				hitcheck = false;
-			} else {
 			}
+			//If the player's sum of cards is higher than 21 and he/she has an Ace with a value of 11, the program changes the Ace for a 1 by substracting 10 to the player's sum of cards
+			else if (sumPlayer > 21 && aceCheck == true) {
+				let prevSum;
+				prevSum = sumPlayer;
+				sumPlayer = sumPlayer - 10;
+
+				gameInfo.innerHTML = `<p>You 'Bust' with ${prevSum}. You change your Ace from an 11 to a 1. Your new number is ${sumPlayer}</p>`;
+				gameSpace.innerHTML = `<p>Your Card is ${playerCard}. You Have ${sumPlayer}. Dealer's First Card is ${dealerCards[0]}. Your bet is $${betAmount}. Please press the HIT ME button to give you a card. Press the STAND button to 'stand'. Press the QUIT button to quit.</p>`;
+				aceCheck = false;
+				//If the player's sum of cards is higher than 21, then he/she looses
+				if (sumPlayer > 21) {
+					money -= betAmount;
+					gameInfo = ``;
+					gameSpace.innerHTML = `<p>YOU LOSE THIS TIME :(. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. Dealer's Cards were ${dealerCards}. You LOSE $${betAmount}. Now your total amount of money is $${money}</p>`;
+					totalMoney.innerHTML = `<p>Your Total Money is: $${money}</p>`;
+					hitcheck = false;
+				} else {
+				}
+			}
+		} else {
+			gameSpace.innerHTML = `<p>You first need to  place a bet in the Bet field and then press the BET button.</p>`;
 		}
 	}
 
 	/*When the user "stands"*/
 	function stand() {
-		hitcheck = false;
-		if (dealerCards[1] == 1 && dealerAces.length < 1) {
-			alert(`Dealer got an Ace. It's new value is an 11`);
-			dealerCards[1] = 11;
-			dealerAces.push(1);
-			sumDealerCards = sumDealer();
-			console.log(dealerAces);
-			console.log(dealerCards);
-			console.log(dealerAces.length - 1);
-			alert(
-				`You Stand. Your cards are $${playerCard} You Have ${sumPlayer}. Dealer's Cards are ${dealerCards}. Dealer's sum is ${sumDealerCards}. Your bet is $${betAmount}.`
-			);
+		gameInfo = ``;
+		if (standCheck == false) {
+			hitcheck = false;
+			betcheck = false;
+			if (dealerCards[1] == 1 && dealerAces.length < 1) {
+				dealerCards[1] = 11;
+				dealerAces.push(1);
+				sumDealerCards = sumDealer();
+				console.log(dealerAces);
+				console.log(dealerCards);
+				console.log(dealerAces.length - 1);
+			} else {
+				sumDealerCards = sumDealer();
+			}
+
+			// If the dealer busts (gets more than 21) or the player sum of the cards is lower than 21 but it's higher than the Dealer's, then the player wins
+			//PREGUNTA Es necesario colocar tantos you win, you lose? Existe alguna forma mas elegante o correcta de hacerlo?
+
+			/*IA where the dealer MUST draw cards until a value of 17 and then stands*/
+			while (sumDealerCards < 17 && sumDealerCards < sumPlayer) {
+				dealerCard();
+			}
+			if (sumDealerCards > 21 || sumPlayer > sumDealerCards) {
+				money += betAmount;
+				gameSpace.innerHTML = `<p> CONGRATULATIONS!!!!! YOU WIN!!!!!. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. Dealer's Cards were ${dealerCards}. You WIN $${betAmount}. Now your total amount of money is $${money} </p>`;
+				totalMoney.innerHTML = `Your Total Money is: $${money}`;
+				standCheck = true;
+			}
+			// else, the player looses
+			else {
+				money -= betAmount;
+				gameSpace.innerHTML = `<p>YOU LOSE THIS TIME :(. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. Dealer's Cards were ${dealerCards}. You LOSE $${betAmount}. Now your total amount of money is $${money} </p>`;
+				totalMoney.innerHTML = `Your Total Money is: $${money}`;
+				standCheck = true;
+			}
 		} else {
-			sumDealerCards = sumDealer();
-			alert(
-				`You Stand. Your cards are $${playerCard} You Have ${sumPlayer}. Dealer's Cards are ${dealerCards}. Dealer's sum is ${sumDealerCards}. Your bet is $${betAmount}.`
-			);
-		}
-
-		// If the dealer busts (gets more than 21) or the player sum of the cards is lower than 21 but it's higher than the Dealer's, then the player wins
-		//PREGUNTA Es necesario colocar tantos you win, you lose? Existe alguna forma mas elegante o correcta de hacerlo?
-
-		/*IA where the dealer MUST draw cards until a value of 17 and then stands*/
-		while (sumDealerCards < 17 && sumDealerCards < sumPlayer) {
-			console.log(`The While starts`);
-			dealerCard();
-		}
-		if (sumDealerCards > 21 || sumPlayer > sumDealerCards) {
-			money += betAmount;
-			alert(
-				`CONGRATULATIONS!!!!! YOU WIN!!!!!. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. You WIN $${betAmount}. Now your total amount of money is $${money}`
-			);
-			totalMoney.innerHTML = `Your Total Money is: $${money}`;
-			quit = false;
-		}
-		// else, the player looses
-		else {
-			money -= betAmount;
-			alert(
-				`YOU LOSE THIS TIME :(. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. You LOSE $${betAmount}. Now your total amount of money is $${money}`
-			);
-			totalMoney.innerHTML = `Your Total Money is: $${money}`;
-			quit = false;
+			gameSpace.innerHTML = `<p> Please Press the BET button to start again. Press the QUIT button to save your Higscore and reset. Press RESET to reset your money.</p>`;
 		}
 	}
 
 	function quitFinal() {
+		hitcheck = false;
+		standCheck = true;
+		betcheck = false;
 		totalMoney.innerHTML = `<p> Your final money is $${money}. You started with $${initialMoney}. Thanks for playing :D. Have a nice day </p>`;
 		if (isNaN(parseFloat(localStorage.getItem(`score`))) === true) {
 			localStorage.setItem(`score`, money);
@@ -238,6 +261,9 @@ function blackjack() {
 		}
 	}
 	function reset() {
+		hitcheck = false;
+		standCheck = true;
+		betcheck = false;
 		money = initialMoney;
 		totalMoney.innerHTML = `<p> Your Total Money is: $${initialMoney} </p>`;
 	}
@@ -253,6 +279,8 @@ function blackjack() {
 		hitmeButton = document.getElementById("hitmeButton"),
 		standButton = document.getElementById("standButton"),
 		gameSpace = document.getElementById("gameSpace"),
+		gameInfo = document.getElementById("gameInfo"),
+		aceHTML = document.getElementById("aceHTML"),
 		initialMoney = 10000,
 		newDecks = [
 			1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8,
@@ -282,10 +310,11 @@ function blackjack() {
 			8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
 		];
 	let hitcheck = false,
+		standCheck = true,
+		betcheck = false,
 		dealerAces = [],
-		quit,
 		dealerCards = [],
-		playerCards = [],
+		//playerCards = [], Esta variable son las cartas del jugador que tengo pensado implementar para la 3er entrega.
 		playerCard,
 		sumPlayer = 0,
 		aceValue,
@@ -303,6 +332,7 @@ function blackjack() {
 	standButton.addEventListener("click", stand);
 	betText.value = "";
 	rulesText.innerHTML = ``;
+	gameInfo.innerHTML = ``;
 	totalMoney.innerHTML = `<p>Your Total Money is: $${money}</p>`;
 	gameSpace.innerHTML = `<p> The objective of the game is to get closer to 21 than the dealer. To do so, first place a bet in the Bet field and press the BET button. Afterwards, press the HIT ME button until you are close enough to 21, and then press the STAND button so the Dealer starts playing. Press the RESET button to start again and press the QUIT button to save your highscore and start again.</p>`;
 }
