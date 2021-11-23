@@ -124,7 +124,7 @@ function blackjack() {
 	}
 	function hitMe() {
 		//The program asks for a card and then checks if the player has an Ace, and asks for a valid value of 1 or 11
-		gameInfo.innerHTML;
+		gameInfo.innerHTML = ``;
 		if (betcheck == true) {
 			hitcheck = true;
 			playerCard = deck1.giveCardCheckAce();
