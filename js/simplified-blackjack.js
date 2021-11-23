@@ -27,32 +27,6 @@ function blackjack() {
 			dealerAces.push(0);
 		}
 	}
-	function aceButtonCheck() {
-		aceValue = parseInt(aceText.value);
-
-		while (!(aceValue == 1 || aceValue == 11)) {
-			aceValue = parseInt(aceText.value);
-		}
-		if (aceValue == 11) {
-			aceCheck = true;
-		}
-		return aceValue;
-	}
-	function acePlayerCheck() {
-		aceHTML.innerHTML = `<p class="col-auto"> Please Select a Value for the ACE. Valid Values are 1 or 11</p> 
-
-				<input class="col-auto"
-					type="number"
-					id="aceText"
-					placeholder="Please Enter Ace Value"
-				/>
-				<button class="btn btn-primary col-auto" id="aceButton">
-					ACE VALUE
-				</button> </div> </div>`;
-		aceText = document.getElementById("aceText");
-		aceButton = document.getElementById("aceButton");
-		aceButton.addEventListener("click", aceButtonCheck);
-	}
 	function dealerCard() {
 		dealerCards.push(randomCard());
 		sumDealerCards = sumDealer();
@@ -82,16 +56,10 @@ function blackjack() {
 	}
 
 	/* This function checks if the user entered a valid number for the Ace and checks until a valid number is written */
-	/*function ace(value) {
+	function ace(value) {
 		while (!(value == 1 || value == 11)) {
-			gameInfo.innerHTML = ` <p>Please choose a value for the Ace. Valid values are 1 or 11</p> <input
-			type="text"
-			id="aceText"
-			placeholder="Please Enter Ace Value"
-		/>
-		<button class="btn btn-primary" id="aceButton"></button>`;
-			value = aceText.value;
 			value = parseInt(
+				//gameInfo.innerHTML=
 				prompt(
 					"Please choose a valid value for the Ace. Valid values are 1 or 11"
 				)
@@ -101,7 +69,7 @@ function blackjack() {
 			aceCheck = true;
 		}
 		return value;
-	}*/
+	}
 	class decks {
 		constructor(cards) {
 			this.cards = cards;
@@ -110,19 +78,18 @@ function blackjack() {
 		giveCardCheckAce() {
 			playerCard = randomCard();
 			if (playerCard == 1) {
-				playerCard = acePlayerCheck();
-				/*aceValue = parseInt(
+				aceValue = parseInt(
 					prompt(
 						"Please choose a value for the Ace. Valid values are 1 or 11"
 					)
 				);
-				playerCard = ace(aceValue);*/
+				playerCard = ace(aceValue);
 			}
 			return playerCard;
 		}
 	}
 	function init() {
-		gameInfo = ``;
+		gameInfo.innerHTML = ``;
 		if (money > 0 && hitcheck == false) {
 			totalMoney.innerHTML = `<p>Your Total Money is: $${money}</p>`;
 
@@ -155,7 +122,7 @@ function blackjack() {
 	}
 	function hitMe() {
 		//The program asks for a card and then checks if the player has an Ace, and asks for a valid value of 1 or 11
-		gameInfo = ``;
+		gameInfo.innerHTML;
 		if (betcheck == true) {
 			hitcheck = true;
 			playerCard = deck1.giveCardCheckAce();
@@ -196,7 +163,7 @@ function blackjack() {
 
 	/*When the user "stands"*/
 	function stand() {
-		gameInfo = ``;
+		gameInfo.innerHTML = ``;
 		if (standCheck == false) {
 			hitcheck = false;
 			betcheck = false;
@@ -280,7 +247,6 @@ function blackjack() {
 		standButton = document.getElementById("standButton"),
 		gameSpace = document.getElementById("gameSpace"),
 		gameInfo = document.getElementById("gameInfo"),
-		aceHTML = document.getElementById("aceHTML"),
 		initialMoney = 10000,
 		newDecks = [
 			1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1, 2, 3, 4, 5, 6, 7, 8,
