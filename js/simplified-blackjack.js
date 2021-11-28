@@ -134,6 +134,7 @@ function blackjack() {
 		playerCards.push(currentCard);
 		blackjack = checkBlackjack(playerCards);
 		if (blackjack == true) {
+			sumPlayer = sumPlayerCards(playerCards);
 			stand();
 		} else {
 			if (currentCard == 11) {
@@ -237,7 +238,7 @@ function blackjack() {
 					const blackjackWinings = 1.5 * betAmount;
 					money += blackjackWinings;
 
-					gameSpace.innerHTML = `<p> CONGRATULATIONS YOU GOT BLACKJACK AND THE DEALER DIDN'T!!!!! YOU WIN!!!!!. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. Dealer's Cards were ${dealerCards}. You WIN $${blackjackWinings}. Now your total amount of money is $${money} </p>`;
+					gameSpace.innerHTML = `<p> CONGRATULATIONS YOU GOT BLACKJACK AND THE DEALER DIDN'T!!!!! YOU WIN!!!!!.  Dealer's Cards were ${dealerCards}. Your cards were ${playerCards}. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. Dealer's Cards were ${dealerCards}. You WIN $${blackjackWinings}. Now your total amount of money is $${money} </p>`;
 					totalMoney.innerHTML = `Your Total Money is: $${money}`;
 				} else {
 					money -= betAmount;
@@ -248,7 +249,7 @@ function blackjack() {
 				blackjack = checkBlackjack(dealerCards);
 				if (blackjack == true) {
 					money -= betAmount;
-					gameSpace.innerHTML = `<p> YOU LOSE THIS TIME :( . The Dealer got <strong> BLACKJACK </strong>. Dealer's Cards were ${dealerCards}. You LOSE $${betAmount}. Now your total amount of money is $${money} </p>`;
+					gameSpace.innerHTML = `<p> YOU LOSE THIS TIME :( . The Dealer got <strong> BLACKJACK </strong>. Dealer's Cards were ${dealerCards}. Your cards were ${playerCards}. You got ${sumPlayer} and the Dealer got ${sumDealerCards}. You LOSE $${betAmount}. Now your total amount of money is $${money} </p>`;
 					totalMoney.innerHTML = `Your Total Money is: $${money}`;
 				} else {
 					if (dealerCards[1] == 1 && dealerAces.length < 1) {
