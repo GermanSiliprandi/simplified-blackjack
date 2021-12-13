@@ -482,12 +482,12 @@ function blackjack(_cardsImages) {
 			display: "none",
 		})
 		.html(
-			`<p> Welcome to a game of simplified blackjack, where you can't split or double down. You play with 8 decks. </p> <p> The objective of the game is to get closer to 21 than the dealer. If you win the house pays 1:1. If you get an ACE and a 10 as your first 2 cards, you win 1.5*Bet. If both you and the dealer gets blackjack you don't lose any money. If the dealer gets blackjack and you don't, you lose your bet. To do so, first place a bet in the Bet field and press the BET button. Afterwards, press the HIT ME button until you are close enough to 21, and then press the STAND button so the Dealer starts playing. Press the RESET button to start again and press the QUIT button to save your highscore and start again.</p>`
+			`<p> Welcome to a game of simplified blackjack, where you can't split or double down. You play with 8 decks. </p> <p> The objective of the game is to get closer to 21 than the dealer. </p> <p> If you win the house pays 1:1. If you get an ACE and a 10 as your first 2 cards, you win 1.5*Bet. </p> <p> If both you and the dealer gets blackjack you don't lose any money. If the dealer gets blackjack and you don't, you lose your bet.</p> <p> To do so, first place a bet in the Bet field and press the BET button. </p> <p> Afterwards, press the HIT ME button until you are close enough to 21, and then press the STAND button so the Dealer starts playing. </p> <p> Press the RESET button to start again and press the QUIT button to save your score and start again.</p>`
 		);
 	betText.value = "";
 	gameInfo.innerHTML = ``;
 	totalMoney.innerHTML = `<p>Your Total Money is: $${money}</p>`;
-	gameSpace.innerHTML = `<p> The objective of the game is to get closer to 21 than the dealer. To do so, first place a bet in the Bet field and press the BET button. Afterwards, press the HIT ME button until you are close enough to 21, and then press the STAND button so the Dealer starts playing. Press the RESET button to start again and press the QUIT button to save your highscore and start again.</p>`;
+	gameSpace.innerHTML = `<p> The objective of the game is to get closer to 21 than the dealer. </p> <p> To do so, first place a bet in the Bet field and press the BET button. </p> <p> Afterwards, press the HIT ME button until you are close enough to 21, and then press the STAND button so the Dealer starts playing.</p> <p> Press the RESET button to start again and press the QUIT button to save your score and start again.</p>`;
 	console.log(cardsDecks);
 }
 //First I need to get the data from the .json file and then call blackjack
